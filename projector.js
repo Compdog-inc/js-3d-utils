@@ -1,9 +1,11 @@
 window.Utils['_register']('Projector', function(factory){
   window.Utils.MatrixMath('_Projector_matrixMath');
   window.Utils.VertexAccess('_Projector_vertexAccess');
+  window.Utils.VectorMath('_Projector_vectorMath');
   
   const matrixMath = window.Utils['_Projector_matrixMath'];
   const vertexAccess = window.Utils['_Projector_vertexAccess'];
+  const vectorMath = window.Utils['_Projector_vectorMath'];
   
   return function(id){
     const pn = function (pmat) {
@@ -24,8 +26,7 @@ window.Utils['_register']('Projector', function(factory){
         return false;
       }
     };
-    const p = function (mvpMat, c, x,y,width,height,near,far) {
-      const pmat = matrixMath.transform(mvpMat, vertexAccess.V4(c));
+    const p = function (pmat, x,y,width,height,near,far) {
       const t = pn(pmat);
       return {
         screen:
@@ -39,6 +40,39 @@ window.Utils['_register']('Projector', function(factory){
           pcull(pmat)
       };
     };
-    factory(id, {project:p});
+
+    const r = function (mvpMat, p0,p1,p2, x,y,width,height,near,far) {
+      const Tmats = [
+        matrixMath.transform(mvpMat, vertexAccess.Ve(p0)),
+        matrixMath.transform(mvpMat, vertexAccess.Ve(p1)),
+        matrixMath.transform(mvpMat, vertexAccess.Ve(p2))
+      ];
+
+      if (
+        matrixMath.dot(
+          pn(Tmats[0]).map((v) => -v),
+          vectorMath.N(
+            pn(Tmats[0]),
+            pn(Tmats[1]),
+            pn(Tmats[2])
+          )
+        ) > 0
+      ) {
+        return null;
+      } else {
+        const cull0 = pcull(Tmats[0]);
+        const cull1 = pcull(Tmats[1]);
+        const cull2 = pcull(Tmats[2]);
+        if(cull0 || cull1 || cull2)
+          return [
+            p(Tmats[0],x,y,width,height,near,far),
+            p(Tmats[1],x,y,width,height,near,far),
+            p(Tmats[2],x,y,width,height,near,far)
+                 ];
+        else
+          return null;
+      }
+    };
+    factory(id, {project:r});
   }
 });
