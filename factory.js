@@ -3,15 +3,14 @@ window.Utils = Utils;
 Object.defineProperty(window.Utils, '_register', {
   value: function(n,i){
     Object.defineProperty(window.Utils, n, {
-      value: i,
+      value: i(function(id,v){
+        Object.defineProperty(window.Utils, id, {
+          value: v,
+          writable: false,
+        });
+      }),
       writable: false,
     });
-    return function(id,v){
-      Object.defineProperty(window.Utils[n], id, {
-        value: v,
-        writable: false,
-      });
-    };
   },
   writable: false,
 });
