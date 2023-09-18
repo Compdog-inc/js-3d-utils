@@ -45,9 +45,9 @@ window.Utils['_register']('Rasterizer', function(factory){
 
     const drawTriangles = function (vertexShader,geoShader,pixelShader,matrix, verts, tris, viewX, viewY, viewWidth,viewHeight,viewNear,viewFar) {
       for (let t = 0; t < tris.length / 3; ++t) {
-        const p0=vertexShader(verts[tris[t*3+0]]),
-        const p1=vertexShader(verts[tris[t*3+1]]),
-        const p2=vertexShader(verts[tris[t*3+2]])
+        const p0=vertexShader(verts[tris[t*3+0]]);
+        const p1=vertexShader(verts[tris[t*3+1]]);
+        const p2=vertexShader(verts[tris[t*3+2]]);
         const poly = projector.project(
           matrix,
           p0.position,
