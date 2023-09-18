@@ -3,7 +3,7 @@ window.Utils['_register']('Rasterizer', function(factory){
   
   const projector = window.Utils['_Rasterizer_projector'];
   
-  return function(id){
+  return function(id,ctdata,ctdata_depth){
     const boundTriangle = function (poly) {
       return {
         left: Math.floor(Math.min(poly[0][0], Math.min(poly[1][0], poly[2][0]))),
@@ -75,7 +75,7 @@ window.Utils['_register']('Rasterizer', function(factory){
           ) {
             const tx = Math.floor((i % (bounds.right - bounds.left)) + bounds.left);
             const ty = Math.floor(i / (bounds.right - bounds.left) + bounds.top);
-            if (tx < viewX || tx >= viewWidth || ty < viewY || ty >= viewHeight)
+            if (tx < 0 || tx >= ctdata.width || ty < 0 || ty >= ctdata.height)
               continue;
     
             if (testTriangle(poly, [tx, ty])) {
