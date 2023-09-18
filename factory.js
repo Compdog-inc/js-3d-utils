@@ -1,17 +1,17 @@
 const Utils = {};
 window.Utils = Utils;
 Object.defineProperty(window.Utils, '_register', {
-  value: function(id,n,p){
-    // id
-    Object.defineProperty(window.Utils, id, {
-      value: p,
-      writable: false,
-    });
-    // long name
+  value: function(n,i){
     Object.defineProperty(window.Utils, n, {
-      value: p,
+      value: i,
       writable: false,
     });
+    return function(id,v){
+      Object.defineProperty(window.Utils[n], id, {
+        value: v,
+        writable: false,
+      });
+    };
   },
   writable: false,
 });
