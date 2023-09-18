@@ -3,7 +3,9 @@ window.Utils['_register']('Rasterizer', function(factory){
   
   const projector = window.Utils['_Rasterizer_projector'];
   
-  return function(id,ctdata,ctdata_depth){
+  return function(id,ctdata_ref,ctdata_set,
+  ctdata_depth_set,
+  ctdata_depth_get){
     const boundTriangle = function (poly) {
       return {
         left: Math.floor(Math.min(poly[0][0], Math.min(poly[1][0], poly[2][0]))),
@@ -44,6 +46,7 @@ window.Utils['_register']('Rasterizer', function(factory){
     };
 
     const drawTriangles = function (vertexShader,geoShader,pixelShader,matrix, verts, tris, viewX, viewY, viewWidth,viewHeight,viewNear,viewFar) {
+      const ctdata = ctdata_ref();
       for (let t = 0; t < tris.length / 3; ++t) {
         const p0=vertexShader(verts[tris[t*3+0]]);
         const p1=vertexShader(verts[tris[t*3+1]]);
@@ -93,13 +96,13 @@ window.Utils['_register']('Rasterizer', function(factory){
 
               const pixel = pixelShader(tri);
     
-              if (curDepth < ctdata_depth[tx + ty * ctdata.width]) {
-                ctdata.data[(tx + ty * ctdata.width) * 4 + 0] = Math.floor(pixel.target[0] * 255);
-                ctdata.data[(tx + ty * ctdata.width) * 4 + 1] = Math.floor(pixel.target[1] * 255);
-                ctdata.data[(tx + ty * ctdata.width) * 4 + 2] = Math.floor(pixel.target[2] * 255);
-                ctdata.data[(tx + ty * ctdata.width) * 4 + 3] = 255;
+              if (curDepth < ctdata_depth_get(tx + ty * ctdata.width)) {
+                ctdata_set((tx + ty * ctdata.width) * 4 + 0,Math.floor(pixel.target[0] * 255));
+                ctdata_set((tx + ty * ctdata.width) * 4 + 1,Math.floor(pixel.target[1] * 255));
+                ctdata_set((tx + ty * ctdata.width) * 4 + 2,Math.floor(pixel.target[2] * 255));
+                ctdata_set((tx + ty * ctdata.width) * 4 + 3,255);
     
-                ctdata_depth[tx + ty * ctdata.width] = curDepth;
+                ctdata_depth_set(tx + ty * ctdata.width,curDepth);
               }
             }
           }
