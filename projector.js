@@ -5,7 +5,7 @@ window.Utils['_register']('Projector', function(factory){
   const matrixMath = window.Utils['_Projector_matrixMath'];
   const vertexAccess = window.Utils['_Projector_vertexAccess'];
   
-  return function(id, verts){
+  return function(id){
     const pn = function (pmat) {
       const tmp = pmat;
       const det = tmp[3];
