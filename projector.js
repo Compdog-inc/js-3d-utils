@@ -51,7 +51,7 @@ window.Utils['_register']('Projector', function(factory){
       if (
         matrixMath.dot(
           pn(Tmats[0]).map((v) => -v),
-          vectorMath.N(
+          vectorMath.triNormal(
             pn(Tmats[0]),
             pn(Tmats[1]),
             pn(Tmats[2])
