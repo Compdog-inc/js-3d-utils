@@ -52,12 +52,18 @@ window.Utils['_register']('Rasterizer', function(factory){
         const p1=vertexShader([verts[tris[t*3+1]*3+0],verts[tris[t*3+1]*3+1],verts[tris[t*3+1]*3+2]]);
         const p2=vertexShader([verts[tris[t*3+2]*3+0],verts[tris[t*3+2]*3+1],verts[tris[t*3+2]*3+2]]);
         console.log(p0,p1,p2, viewX,viewY,viewWidth,viewHeight,viewNear,viewFar);
+        try{
         const poly = projector.project(
           matrix,
           p0.position,
           p1.position,
           p2.position,
           viewX,viewY,viewWidth,viewHeight,viewNear,viewFar);
+        } catch(e){
+          console.log("Error");
+          console.log(e);
+          continue;
+        }
         console.log("P: "+poly);
         if (poly != null) {
           const bounds = boundTriangle(poly);
