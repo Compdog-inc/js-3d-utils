@@ -61,7 +61,7 @@ window.Utils['_register']('Rasterizer', function(factory){
           viewX,viewY,viewWidth,viewHeight,viewNear,viewFar);
         } catch(e){
           console.log("Error");
-          console.log(e);
+          console.log(e.toString());
           continue;
         }
         console.log("P: "+poly);
