@@ -57,7 +57,7 @@ window.Utils['_register']('Rasterizer', function(factory){
           p1.position,
           p2.position,
           viewX,viewY,viewWidth,viewHeight,viewNear,viewFar);
-        
+        console.log(poly, p0,p1,p2, viewX,viewY,viewWidth,viewHeight,viewNear,viewFar);
         if (poly != null) {
           const bounds = boundTriangle(poly);
     
