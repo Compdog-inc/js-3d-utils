@@ -45,7 +45,7 @@ window.Utils['_register']('Rasterizer', function(factory){
       return [u, v, w];
     };
 
-    const drawTriangles = function (vertexShader,geoShader,pixelShader,matrix, verts, tris, viewX, viewY, viewWidth,viewHeight,viewNear,viewFar) {
+    const drawTriangles = function (vertexShader,geoShader,pixelShader,matrix, verts, tris, viewX, viewY, viewWidth,viewHeight,viewNear,viewFar,zNear,zFar) {
       const ctdata = ctdata_ref();
       for (let t = 0; t < tris.length / 3; ++t) {
         const p0=vertexShader([verts[tris[t*3+0]*3+0],verts[tris[t*3+0]*3+1],verts[tris[t*3+0]*3+2]]);
@@ -57,7 +57,7 @@ window.Utils['_register']('Rasterizer', function(factory){
           p0.position,
           p1.position,
           p2.position,
-          viewX,viewY,viewWidth,viewHeight,viewNear,viewFar);
+          viewX,viewY,viewWidth,viewHeight,viewNear,viewFar,zNear,zFar);
 
         if (poly != null) {
           const bounds = boundTriangle(poly);
