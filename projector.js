@@ -26,14 +26,14 @@ window.Utils['_register']('Projector', function(factory){
         return false;
       }
     };
-    const p = function (pmat, x,y,width,height,near,far) {
+    const p = function (pmat, x,y,width,height,near,far,znear,zfar) {
       const t = pn(pmat);
       return {
         screen:
         [
           (width / 2.0) * t[0] + x + width / 2.0,
           height - ((height / 2.0) * t[1] + y + height / 2.0),
-          ((far - near) / 2.0) * ((t[2] - near) / (far - near)) +
+          ((far - near) / 2.0) * ((t[2] - znear) / (zfar - znear)) +
             (far + near) / 2.0
         ],
         cull:
@@ -41,7 +41,7 @@ window.Utils['_register']('Projector', function(factory){
       };
     };
 
-    const r = function (mvpMat, p0,p1,p2, x,y,width,height,near,far) {
+    const r = function (mvpMat, p0,p1,p2, x,y,width,height,near,far,znear,zfar) {
       const Tmats = [
         matrixMath.transform(mvpMat, vertexAccess.Ve(p0)),
         matrixMath.transform(mvpMat, vertexAccess.Ve(p1)),
@@ -65,9 +65,9 @@ window.Utils['_register']('Projector', function(factory){
         const cull2 = pcull(Tmats[2]);
         if(cull0 || cull1 || cull2)
           return [
-            p(Tmats[0],x,y,width,height,near,far),
-            p(Tmats[1],x,y,width,height,near,far),
-            p(Tmats[2],x,y,width,height,near,far)
+            p(Tmats[0],x,y,width,height,near,far,znear,zfar),
+            p(Tmats[1],x,y,width,height,near,far,znear,zfar),
+            p(Tmats[2],x,y,width,height,near,far,znear,zfar)
                  ];
         else
           return null;
