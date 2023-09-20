@@ -30,12 +30,12 @@ window.Utils['_register']('Projector', function(factory){
       console.log(pmat,x,y,width,height,near,far,znear,zfar);
       const t = pn(pmat);
       console.log('t: ',t);
-      return console.log('a',[
+      return [
           (width / 2.0) * t[0] + x + width / 2.0,
           height - ((height / 2.0) * t[1] + y + height / 2.0),
           ((far - near) / 2.0) * ((t[2] - znear) / (zfar - znear)) +
             (far + near) / 2.0
-        ]);
+        ];
     };
 
     const r = function (mvpMat, p0,p1,p2, x,y,width,height,near,far,znear,zfar) {
