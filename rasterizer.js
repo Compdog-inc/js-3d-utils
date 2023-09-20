@@ -71,7 +71,7 @@ window.Utils['_register']('Rasterizer', function(factory){
             continue;
 
           const tri = geoShader([p0,p1,p2]);
-          console.log(poly);
+
           for (
             let i = 0;
             i < (bounds.right - bounds.left) * (bounds.bottom - bounds.top);
