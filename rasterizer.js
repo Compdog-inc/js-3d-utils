@@ -71,7 +71,7 @@ window.Utils['_register']('Rasterizer', function(factory){
             continue;
 
           const tri = geoShader([p0,p1,p2]);
-          
+          console.log(poly);
           for (
             let i = 0;
             i < (bounds.right - bounds.left) * (bounds.bottom - bounds.top);
@@ -95,7 +95,7 @@ window.Utils['_register']('Rasterizer', function(factory){
                 }
               }
 
-              const pixel = pixelShader(tri);
+              const pixel = pixelShader(tri, [tx, ty]);
     
               if (curDepth < ctdata_depth_get(tx + ty * ctdata.width)) {
                 ctdata_set((tx + ty * ctdata.width) * 4 + 0,Math.floor(pixel.target[0] * 255));
