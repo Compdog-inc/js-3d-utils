@@ -29,6 +29,7 @@ window.Utils['_register']('Projector', function(factory){
     const p = function (pmat, x,y,width,height,near,far,znear,zfar) {
       console.log(pmat,x,y,width,height,near,far,znear,zfar);
       const t = pn(pmat);
+      console.log('t: ',t);
       return 
         [
           (width / 2.0) * t[0] + x + width / 2.0,
@@ -62,7 +63,7 @@ window.Utils['_register']('Projector', function(factory){
         const cull2 = pcull(Tmats[2]);
         if(cull0 || cull1 || cull2)
           return [
-            p(Tmats[0],x,y,width,height,near,far,znear,zfar),
+            console.log(p(Tmats[0],x,y,width,height,near,far,znear,zfar)),
             p(Tmats[1],x,y,width,height,near,far,znear,zfar),
             p(Tmats[2],x,y,width,height,near,far,znear,zfar)
                  ];
