@@ -7,6 +7,7 @@ window.Utils['_register']('Rasterizer', function(factory){
   ctdata_depth_set,
   ctdata_depth_get){
     const boundTriangle = function (poly) {
+      console.log(poly);
       return {
         left: Math.floor(Math.min(poly[0][0], Math.min(poly[1][0], poly[2][0]))),
         right: Math.ceil(Math.max(poly[0][0], Math.max(poly[1][0], poly[2][0]))),
