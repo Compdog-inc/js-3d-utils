@@ -27,6 +27,7 @@ window.Utils['_register']('Projector', function(factory){
       }
     };
     const p = function (pmat, x,y,width,height,near,far,znear,zfar) {
+      console.log(pmat,x,y,width,height,near,far,znear,zfar);
       const t = pn(pmat);
       return 
         [
