@@ -1,13 +1,14 @@
 window.Utils['_register']('Rasterizer', function(factory){
   window.Utils.Projector('_Rasterizer_projector');
+  window.Utils.MatrixMath('_Rasterizer_matrixMath');
   
   const projector = window.Utils['_Rasterizer_projector'];
+  const matrixMath = window.Utils['_Rasterizer_matrixMath'];
   
   return function(id,ctdata_ref,ctdata_set,
   ctdata_depth_set,
   ctdata_depth_get){
     const boundTriangle = function (poly) {
-      console.log(poly);
       return {
         left: Math.floor(Math.min(poly[0][0], Math.min(poly[1][0], poly[2][0]))),
         right: Math.ceil(Math.max(poly[0][0], Math.max(poly[1][0], poly[2][0]))),
@@ -34,11 +35,11 @@ window.Utils['_register']('Rasterizer', function(factory){
       const v0 = [poly[1][0] - poly[0][0], poly[1][1] - poly[0][1], 0];
       const v1 = [poly[2][0] - poly[0][0], poly[2][1] - poly[0][1], 0];
       const v2 = [pt[0] - poly[0][0], pt[1] - poly[0][1], 0];
-      const d00 = D(v0, v0);
-      const d01 = D(v0, v1);
-      const d11 = D(v1, v1);
-      const d20 = D(v2, v0);
-      const d21 = D(v2, v1);
+      const d00 = matrixMath.dot(v0, v0);
+      const d01 = matrixMath.dot(v0, v1);
+      const d11 = matrixMath.dot(v1, v1);
+      const d20 = matrixMath.dot(v2, v0);
+      const d21 = matrixMath.dot(v2, v1);
       const denom = d00 * d11 - d01 * d01;
       const v = (d11 * d20 - d01 * d21) / denom;
       const w = (d00 * d21 - d01 * d20) / denom;
