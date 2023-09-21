@@ -199,6 +199,26 @@ window.Utils['_register']('MatrixMath', function(factory){
         A[12] * B[0] + A[13] * B[1] + A[14] * B[2] + A[15] * B[3]
       ];
     };
-    factory(id, {dot:D,mul:M,inv:Minv,transform:m});
+    const transpose = (mat) => {
+      return [
+        mat[4 * 0 + 0],
+        mat[4 * 1 + 0],
+        mat[4 * 2 + 0],
+        mat[4 * 3 + 0],
+        mat[4 * 0 + 1],
+        mat[4 * 1 + 1],
+        mat[4 * 2 + 1],
+        mat[4 * 3 + 1],
+        mat[4 * 0 + 2],
+        mat[4 * 1 + 2],
+        mat[4 * 2 + 2],
+        mat[4 * 3 + 2],
+        mat[4 * 0 + 3],
+        mat[4 * 1 + 3],
+        mat[4 * 2 + 3],
+        mat[4 * 3 + 3]
+      ];
+    };
+    factory(id, {dot:D,mul:M,inv:Minv,transform:m,transpose:transpose});
   }
 });
