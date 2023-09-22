@@ -55,6 +55,6 @@ window.Utils['_register']('Hierarchy', function(factory){
       return matrixMath.mul(getTransformMatrix(obj.parent), local);
     };
     
-    factory(id, {});
+    factory(id, {create,addChild,removeChild,setParent,getTransformMatrix});
   }
 });
