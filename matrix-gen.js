@@ -83,6 +83,21 @@ window.Utils['_register']('MatrixGen', function(factory){
         1
       ];
     };
-    factory(id, {Mtranslate,Mscale,Mrot:{x:Mrotx,y:Mroty,z:Mrotz,q:MrotQ}});
+    const QuaternionFromEuler = function(x,y,z){
+      const cx = cos(x * 0.5);
+      const sx = sin(x * 0.5);
+      const cy = cos(y * 0.5);
+      const sy = sin(y * 0.5);
+      const cz = cos(z * 0.5);
+      const sz = sin(z * 0.5);
+
+      return [
+        sz * cx * cy - cz * sx * sy,
+        cz * sx * cy + sz * cx * sy,
+        cz * cx * sy - sz * sx * cy,
+        cz * cx * cy + sz * sx * sy
+      ];
+    };
+    factory(id, {Mtranslate,Mscale,Mrot:{x:Mrotx,y:Mroty,z:Mrotz,q:MrotQ},QuaternionFromEuler});
   }
 });
