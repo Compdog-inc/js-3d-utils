@@ -38,8 +38,7 @@ window.Utils['_register']('Hierarchy', function(factory){
       const pos = matrixGen.Mtranslate(obj.position[0],obj.position[1],obj.position[2]);
       const rot = matrixGen.Mrot.q(obj.rotation);
       const scale = matrixGen.Mscale(obj.scale[0],obj.scale[1],obj.scale[2]);
-      return
-        matrixMath.mul(
+      return matrixMath.mul(
           matrixMath.mul(
             pos, rot
           ),
