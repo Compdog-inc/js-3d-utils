@@ -1,4 +1,5 @@
 window.Utils['_register']('MatrixGen', function(factory){
+  const D2r = Math.PI / 180.0;
   return function(id){
     const Mtranslate = function (x, y, z) {
       return [1, 0, 0, x, 0, 1, 0, y, 0, 0, 1, z, 0, 0, 0, 1];
@@ -83,13 +84,14 @@ window.Utils['_register']('MatrixGen', function(factory){
         1
       ];
     };
+    // DEGREES
     const QuaternionFromEuler = function(x,y,z){
-      const cx = Math.cos(x * 0.5);
-      const sx = Math.sin(x * 0.5);
-      const cy = Math.cos(y * 0.5);
-      const sy = Math.sin(y * 0.5);
-      const cz = Math.cos(z * 0.5);
-      const sz = Math.sin(z * 0.5);
+      const cx = Math.cos(D2r * x * 0.5);
+      const sx = Math.sin(D2r * x * 0.5);
+      const cy = Math.cos(D2r * y * 0.5);
+      const sy = Math.sin(D2r * y * 0.5);
+      const cz = Math.cos(D2r * z * 0.5);
+      const sz = Math.sin(D2r * z * 0.5);
 
       return [
         sz * cx * cy - cz * sx * sy,
