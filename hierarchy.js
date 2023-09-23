@@ -1,7 +1,9 @@
 window.Utils['_register']('Hierarchy', function(factory){
   window.Utils.MatrixMath('_Hierarchy_matrixMath');
   window.Utils.MatrixGen('_Hierarchy_matrixGen');
-  
+  window.Utils.VertexAccess('_Hierarchy_vertexAccess');
+
+  const vertexAccess = window.Utils['_Hierarchy_vertexAccess'];
   const matrixMath = window.Utils['_Hierarchy_matrixMath'];
   const matrixGen = window.Utils['_Hierarchy_matrixGen'];
   
@@ -36,7 +38,7 @@ window.Utils['_register']('Hierarchy', function(factory){
 
     const getLocalMatrix = function(obj){
       const pos = matrixGen.Mtranslate(obj.position[0],obj.position[1],obj.position[2]);
-      const rot = matrixGen.Mrot.q(obj.rotation);
+      const rot = getLocalRotMatrix(obj);
       const scale = matrixGen.Mscale(obj.scale[0],obj.scale[1],obj.scale[2]);
       return matrixMath.mul(
           matrixMath.mul(
@@ -53,7 +55,38 @@ window.Utils['_register']('Hierarchy', function(factory){
 
       return matrixMath.mul(getTransformMatrix(obj.parent), local);
     };
+
+    const getLocalRotMatrix = function(obj){
+      const rot = matrixGen.Mrot.q(obj.rotation);
+      return rot;
+    };
+
+    const getRotationMatrix = function(obj){
+      const local = getLocalRotMatrix(obj);
+      if(obj.parent == null)
+        return local;
+
+      return matrixMath.mul(getRotationMatrix(obj.parent), local);
+    };
+
+    const getUnitVectors = function(obj){
+      const rot = getRotationMatrix(obj);
+      return {
+        forward: matrixMath.transform(
+          rot,
+          vertexAccess.Ve([0, 0, 1])
+        ),
+        right: matrixMath.transform(
+          rot,
+          vertexAccess.Ve([1, 0, 0])
+        ),
+        up: matrixMath.transform(
+          rot,
+          vertexAccess.Ve([0, 1, 0])
+        ),
+      };
+    };
     
-    factory(id, {create,addChild,removeChild,setParent,getTransformMatrix});
+    factory(id, {create,addChild,removeChild,setParent,getTransformMatrix,getRotationMatrix,getUnitVectors});
   }
 });
