@@ -86,10 +86,10 @@ window.Utils['_register']('MatrixGen', function(factory){
     };
     // DEGREES
     const QuaternionFromEuler = function(x,y,z){
-      const cx = Math.cos(D2r * x * 0.5);
-      const sx = Math.sin(D2r * x * 0.5);
-      const cy = Math.cos(D2r * y * 0.5);
-      const sy = Math.sin(D2r * y * 0.5);
+      const cx = Math.cos(D2r * y * 0.5);
+      const sx = Math.sin(D2r * y * 0.5);
+      const cy = Math.cos(D2r * x * 0.5);
+      const sy = Math.sin(D2r * x * 0.5);
       const cz = Math.cos(D2r * z * 0.5);
       const sz = Math.sin(D2r * z * 0.5);
 
